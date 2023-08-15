@@ -6,7 +6,8 @@ import { useEffect } from 'react';
 import Logo from './Logo';
 import WaveBg from '../assets/svg/wavebg';  
 import GradientLine from './GradientLine';
-import { Link, redirect, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import Circle from './icons/circle';
 
 const HeaderStyled = styled.div`
     height: 65px;
@@ -29,10 +30,40 @@ const ItensListStyled = styled.ul`
     cursor: pointer;
 `;
 
+const ItemListStyled = styled.li`
+    display: ${({ active }) => active === 'true' ? 'flex' : ''};
+    flex-direction: ${({ active }) => active === 'true' ? 'column' : ''};
+    position: ${({ active }) => active === 'true' ? 'relative' : ''};
+    top: ${({ active }) => active === 'true' ? '-25px' : ''};
+    align-items: ${({ active }) => active === 'true' ? 'center' : ''};
+`;
+
 const LinkStyled = styled.a`
     color: #D80B77;
     text-decoration: none;
+    position: ${({ active }) => active === 'true' ? 'relative' : ''};
+    top: ${({ active }) => active === 'true' ? '5px' : ''};
+    &:hover {
+        text-decoration: underline;
+    }
 `;
+
+const CircleWrapper = styled.span`
+    display: ${({ active }) => active === 'true' ? 'block' : 'none'};
+    svg {
+        circle {
+            fill: #D80B77;
+        }
+    }
+`
+
+const CircleStyled = ({activeFlag}) => {
+    return (
+        <CircleWrapper active={activeFlag}>
+            <Circle />
+        </CircleWrapper>
+    )
+}
 
 const Header = () => {
     const location = useLocation();
@@ -50,9 +81,18 @@ const Header = () => {
                 <Logo width="60px" height="60px" />
                 <NavItemsStyled>
                     <ItensListStyled>
-                        <LinkStyled href="/">Home</LinkStyled>
-                        <LinkStyled href="/projects">Projects</LinkStyled>
-                        <LinkStyled href="/about">About</LinkStyled>
+                        <ItemListStyled active={(path === '/').toString()}>
+                            <CircleStyled activeFlag={(path === '/').toString()} />
+                            <LinkStyled active={(path === '/').toString()} href="/">Home</LinkStyled>
+                        </ItemListStyled>
+                        <ItemListStyled active={(path === '/projects').toString()}>
+                            <CircleStyled activeFlag={(path === '/projects').toString()} />
+                            <LinkStyled active={(path === '/projects').toString()} href="/projects">Projects</LinkStyled>
+                        </ItemListStyled>
+                        <ItemListStyled active={(path === '/about').toString()}>
+                            <CircleStyled activeFlag={(path === '/about').toString()} />
+                            <LinkStyled active={(path === '/about').toString()} href="/about">About</LinkStyled>
+                        </ItemListStyled>
                     </ItensListStyled>
                 </NavItemsStyled>
             </HeaderStyled>

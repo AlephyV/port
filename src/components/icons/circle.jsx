@@ -1,5 +1,3 @@
-import { styled } from "styled-components"
-
 const Circle = () => {
     return (
         <svg height="15" width="25">
